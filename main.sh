@@ -6,6 +6,7 @@ HELP="Use:
     -n Do not delete the test service account
     -1 for deploymentmanager.deployments.create new VM abuse
     -2 for iam.roles.update abuse
+    -3 for iam.serviceAccountKeys.create abuse
 "
 source lib/lib.sh
 
@@ -14,13 +15,15 @@ RM_SA="1"
 
 DEPLOYMENTMANAGER_VM="" #-1
 IAMROLESUPDATE="" #-2
+IAMSERVICEACCOUNTKEYSCREATE="" #-3
 
-while getopts "h?n12" opt; do
+while getopts "h?n123" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
     1)  DEPLOYMENTMANAGER_VM="1";;
     2)  IAMROLESUPDATE="1";;
+    3)  IAMSERVICEACCOUNTKEYSCREATE="1";;
     esac
 done
 
@@ -48,7 +51,9 @@ if [ "$IAMROLESUPDATE" ]; then
     bash ./tests/2-iam.roles.update.sh
 fi
 
-
+if [ "$IAMSERVICEACCOUNTKEYSCREATE" ]; then
+    bash ./tests/3-iam.serviceAccountKeys.create.sh
+fi
 
 
 # CLEAN ENVIRONMENT
