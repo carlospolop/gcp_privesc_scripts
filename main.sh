@@ -20,8 +20,9 @@ IAMSERVICEACCOUNTKEYSCREATE="" #-3
 IAMGETACCESSTOKEN="" #-4
 IAMIMPLICITDELEGATION="" #-5
 IAMSIGNBLOB="" #-6
+IAMSIGNJWT="" #-7
 
-while getopts "h?n123456" opt; do
+while getopts "h?n1234567" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
@@ -31,6 +32,7 @@ while getopts "h?n123456" opt; do
     4)  IAMGETACCESSTOKEN="1";;
     5)  IAMIMPLICITDELEGATION="1";;
     6)  IAMSIGNBLOB="1";;
+    7)  IAMSIGNJWT="1";;
     esac
 done
 
@@ -74,6 +76,10 @@ fi
 
 if [ "$IAMSIGNBLOB" ]; then
     bash ./tests/6-iam.serviceAccounts.signBlob.sh
+fi
+
+if [ "$IAMSIGNJWT" ]; then
+    bash ./tests/7-iam.serviceAccounts.signJWT.sh
 fi
 
 # CLEAN ENVIRONMENT
