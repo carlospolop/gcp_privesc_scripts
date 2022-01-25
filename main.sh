@@ -19,8 +19,9 @@ IAMROLESUPDATE="" #-2
 IAMSERVICEACCOUNTKEYSCREATE="" #-3
 IAMGETACCESSTOKEN="" #-4
 IAMIMPLICITDELEGATION="" #-5
+IAMSIGNBLOB="" #-6
 
-while getopts "h?n12345" opt; do
+while getopts "h?n123456" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
@@ -29,6 +30,7 @@ while getopts "h?n12345" opt; do
     3)  IAMSERVICEACCOUNTKEYSCREATE="1";;
     4)  IAMGETACCESSTOKEN="1";;
     5)  IAMIMPLICITDELEGATION="1";;
+    6)  IAMSIGNBLOB="1";;
     esac
 done
 
@@ -68,6 +70,10 @@ fi
 
 if [ "$IAMIMPLICITDELEGATION" ]; then
     bash ./tests/5-iam.serviceAccounts.implicitDelegation.sh
+fi
+
+if [ "$IAMSIGNBLOB" ]; then
+    bash ./tests/6-iam.serviceAccounts.signBlob.sh
 fi
 
 # CLEAN ENVIRONMENT
