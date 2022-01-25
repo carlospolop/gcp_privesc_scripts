@@ -18,8 +18,9 @@ DEPLOYMENTMANAGER_VM="" #-1
 IAMROLESUPDATE="" #-2
 IAMSERVICEACCOUNTKEYSCREATE="" #-3
 IAMGETACCESSTOKEN="" #-4
+IAMIMPLICITDELEGATION="" #-5
 
-while getopts "h?n1234" opt; do
+while getopts "h?n12345" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
@@ -27,6 +28,7 @@ while getopts "h?n1234" opt; do
     2)  IAMROLESUPDATE="1";;
     3)  IAMSERVICEACCOUNTKEYSCREATE="1";;
     4)  IAMGETACCESSTOKEN="1";;
+    5)  IAMIMPLICITDELEGATION="1";;
     esac
 done
 
@@ -40,9 +42,11 @@ export ROLE_NAME=$(openssl rand -hex 12)
 export SERVICE_ACCOUNT_ID="securitytest1234"
 export CURRENT_USER_EMAIL=$(gcloud config list 2>/dev/null | grep @ | head -n1 | cut -d " " -f 3)
 
+create_one_sa "$ATTACK_SA"
 create_sa
 create_role "deploymentmanager.deployments.get" # Some random permission here
 bind_sa_with_role
+
 
 
 # LAUNCH TESTS
@@ -62,6 +66,9 @@ if [ "$IAMGETACCESSTOKEN" ]; then
     bash ./tests/4-iam.serviceAccounts.getAccessToken.sh
 fi
 
+if [ "$IAMIMPLICITDELEGATION" ]; then
+    bash ./tests/5-iam.serviceAccounts.implicitDelegation.sh
+fi
 
 # CLEAN ENVIRONMENT
 

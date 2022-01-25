@@ -1,13 +1,15 @@
 #!/bin/bash
 
-create_sa (){
-    if ! gcloud iam service-accounts list | grep -q "$ATTACK_SA@"; then
-        echo "Creating SA: $ATTACK_SA"
-        gcloud iam service-accounts create "$ATTACK_SA" \
+create_one_sa (){
+    if ! gcloud iam service-accounts list | grep -q "$1@"; then
+        echo "Creating SA: $1"
+        gcloud iam service-accounts create "$1" \
             --description="Service account to test permissions" \
-            --display-name="$ATTACK_SA"
+            --display-name="$1"
     fi
+}
 
+create_sa (){
     if ! gcloud iam service-accounts list | grep -q "$SERVICE_ACCOUNT_ID@"; then
         echo "Creating SA: $SERVICE_ACCOUNT_ID"
         gcloud iam service-accounts create "$SERVICE_ACCOUNT_ID" \
@@ -30,18 +32,31 @@ create_sa (){
 }
 
 create_role (){
-    echo "Creating Role: $ROLE_NAME"
-    gcloud iam roles create "$ROLE_NAME" --project="$PROJECT_ID" \
+    TO_CREATE="$ROLE_NAME"
+    if [ "$2" ]; then
+        TO_CREATE="$2"
+    fi
+
+    echo "Creating Role: $TO_CREATE"
+    gcloud iam roles create "$TO_CREATE" --project="$PROJECT_ID" \
         --title="Test Perms" --description="Role to tst permissions" \
         --permissions="$1" --stage="beta"
     echo ""
 }
 
 bind_sa_with_role (){
+    SA_ID="$SERVICE_ACCOUNT_ID"
+    ROLE="$ROLE_NAME"
+    if [ "$1" ]; then
+       SA_ID="$1" 
+    fi
+    if [ "$2" ]; then
+       ROLE="$2"
+    fi
     echo "Binding SA with Role"
     gcloud projects add-iam-policy-binding "$PROJECT_ID" \
-        --member="serviceAccount:${SERVICE_ACCOUNT_ID}@${PROJECT_ID}.iam.gserviceaccount.com" \
-        --role="projects/${PROJECT_ID}/roles/${ROLE_NAME}"
+        --member="serviceAccount:${SA_ID}@${PROJECT_ID}.iam.gserviceaccount.com" \
+        --role="projects/${PROJECT_ID}/roles/${ROLE}"
     echo ""
 }
 

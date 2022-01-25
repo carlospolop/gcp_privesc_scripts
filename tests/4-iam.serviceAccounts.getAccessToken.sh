@@ -17,7 +17,7 @@ gcloud --access-token-file /tmp/privesc_gcp --impersonate-service-account="${ATT
 
 rm /tmp/privesc_gcp
 # Cleaning
-echo "You should see a token previos to this message"
+echo "You should see a token before this message"
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
 
