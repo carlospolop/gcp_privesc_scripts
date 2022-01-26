@@ -14,7 +14,7 @@ gcloud --impersonate-service-account="${SERVICE_ACCOUNT_ID}@${PROJECT_ID}.iam.gs
 cat /tmp/privesc_check
 
 # Cleaning
-echo "You should see a token previos to this message"
+echo "You should see a token previous to this message"
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
 

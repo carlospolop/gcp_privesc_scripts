@@ -25,7 +25,7 @@ curl "https://accounts.google.com/o/oauth2/token"\
 echo ""
 
 # Cleaning
-echo "You should see a token previos to this message"
+echo "You should see a token previous to this message"
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
 

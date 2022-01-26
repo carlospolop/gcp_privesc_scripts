@@ -18,7 +18,7 @@ gcloud --access-token-file /tmp/privesc_gcp auth print-identity-token "${ATTACK_
 
 
 # Cleaning
-echo "You should see a token previos to this message"
+echo "You should see a token previous to this message"
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
 

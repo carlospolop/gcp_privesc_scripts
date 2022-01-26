@@ -29,8 +29,9 @@ SERVICEUSAGEAPIKEYSCREATE="" #-9
 SERVICEUSAGEAPIKEYSLIST="" #-9
 APIKEYCREATE="" #-b
 APIKEYLIST="" #-c
+IAMSETIAMPOLICY="" #-d
 
-while getopts "h?n123456789abc" opt; do
+while getopts "h?n123456789abcd" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
@@ -46,6 +47,7 @@ while getopts "h?n123456789abc" opt; do
     a)  SERVICEUSAGEAPIKEYSLIST="1";;
     b)  APIKEYCREATE="1";;
     c)  APIKEYLIST="1";;
+    d)  IAMSETIAMPOLICY="1";;
     esac
 done
 
@@ -113,6 +115,10 @@ fi
 
 if [ "$APIKEYLIST" ]; then
     bash ./tests/c-apikeys.keys.getKeyString.sh
+fi
+
+if [ "$IAMSETIAMPOLICY" ]; then
+    bash ./tests/d-iam.serviceAccounts.setIamPolicy.sh
 fi
 
 # CLEAN ENVIRONMENT
