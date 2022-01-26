@@ -25,8 +25,12 @@ IAMIMPLICITDELEGATION="" #-5
 IAMSIGNBLOB="" #-6
 IAMSIGNJWT="" #-7
 IAMGETOPENIDTOKEN="" #-8
+SERVICEUSAGEAPIKEYSCREATE="" #-9
+SERVICEUSAGEAPIKEYSLIST="" #-9
+APIKEYCREATE="" #-b
+APIKEYLIST="" #-c
 
-while getopts "h?n12345678" opt; do
+while getopts "h?n123456789abc" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
@@ -38,6 +42,10 @@ while getopts "h?n12345678" opt; do
     6)  IAMSIGNBLOB="1";;
     7)  IAMSIGNJWT="1";;
     8)  IAMGETOPENIDTOKEN="1";;
+    9)  SERVICEUSAGEAPIKEYSCREATE="1";;
+    a)  SERVICEUSAGEAPIKEYSLIST="1";;
+    b)  APIKEYCREATE="1";;
+    c)  APIKEYLIST="1";;
     esac
 done
 
@@ -91,6 +99,22 @@ fi
 #    bash ./tests/8-iam.serviceAccounts.getOpenIdToken.sh
 #fi
 
+if [ "$SERVICEUSAGEAPIKEYSCREATE" ]; then
+    bash ./tests/9-serviceusage.apiKeys.create.sh
+fi
+
+if [ "$SERVICEUSAGEAPIKEYSLIST" ]; then
+    bash ./tests/a-serviceusage.apiKeys.list.sh
+fi
+
+if [ "$APIKEYCREATE" ]; then
+    bash ./tests/b-apikeys.keys.create.sh
+fi
+
+if [ "$APIKEYLIST" ]; then
+    bash ./tests/c-apikeys.keys.list.sh
+fi
+
 # CLEAN ENVIRONMENT
 
 delete_role
@@ -99,7 +123,7 @@ delete_role
 #done
 
 if [ "$RM_SA" ]; then
-    delete_sa
-    delete_sa $ATTACK_SA
+    #delete_sa
+    #delete_sa $ATTACK_SA
     echo "finish"
 fi
