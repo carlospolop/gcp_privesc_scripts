@@ -8,6 +8,9 @@ HELP="Use:
     -2 for iam.roles.update abuse
     -3 for iam.serviceAccountKeys.create abuse
     -4 for iam.serviceAccounts.getAccessToken abuse
+    -5 for iam.serviceAccounts.implicitDelegation abuse
+    -6 for iam.serviceAccounts.signBlob abuse
+    -7 for iam.serviceAccounts.signJwt abuse
 "
 source lib/lib.sh
 
@@ -21,8 +24,9 @@ IAMGETACCESSTOKEN="" #-4
 IAMIMPLICITDELEGATION="" #-5
 IAMSIGNBLOB="" #-6
 IAMSIGNJWT="" #-7
+IAMGETOPENIDTOKEN="" #-8
 
-while getopts "h?n1234567" opt; do
+while getopts "h?n12345678" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
@@ -33,6 +37,7 @@ while getopts "h?n1234567" opt; do
     5)  IAMIMPLICITDELEGATION="1";;
     6)  IAMSIGNBLOB="1";;
     7)  IAMSIGNJWT="1";;
+    8)  IAMGETOPENIDTOKEN="1";;
     esac
 done
 
@@ -82,6 +87,10 @@ if [ "$IAMSIGNJWT" ]; then
     bash ./tests/7-iam.serviceAccounts.signJWT.sh
 fi
 
+#if [ "$IAMGETOPENIDTOKEN" ]; then
+#    bash ./tests/8-iam.serviceAccounts.getOpenIdToken.sh
+#fi
+
 # CLEAN ENVIRONMENT
 
 delete_role
@@ -90,7 +99,7 @@ delete_role
 #done
 
 if [ "$RM_SA" ]; then
-    #delete_sa
-    #delete_sa $ATTACK_SA
+    delete_sa
+    delete_sa $ATTACK_SA
     echo "finish"
 fi
