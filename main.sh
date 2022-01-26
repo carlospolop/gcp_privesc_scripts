@@ -112,7 +112,7 @@ if [ "$APIKEYCREATE" ]; then
 fi
 
 if [ "$APIKEYLIST" ]; then
-    bash ./tests/c-apikeys.keys.list.sh
+    bash ./tests/c-apikeys.keys.getKeyString.sh
 fi
 
 # CLEAN ENVIRONMENT

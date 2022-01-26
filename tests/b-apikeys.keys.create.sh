@@ -18,4 +18,6 @@ echo "You should see a token previous to this message"
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
 
+disable_service "apikeys.googleapis.com"
+
 echo "================================================"
