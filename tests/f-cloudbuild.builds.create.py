@@ -28,7 +28,7 @@ def main():
             }
         ],
         # If you don't indicate any, the default is <PROJECT_NUMBER>@cloudbuild.gserviceaccount.com
-        #'serviceAccount': "projects/<project_id>/serviceAccounts/<sa@email.com>",
+        #'serviceAccount': "projects/-/serviceAccounts/sa@email.com",
         "options": {
             "logging": "NONE"
         }

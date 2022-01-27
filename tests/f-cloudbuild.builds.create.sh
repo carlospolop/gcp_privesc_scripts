@@ -16,6 +16,5 @@ echo "Execute ./tests/f-cloudbuild.builds.create.py to get a reverse shell insid
 read -p "Press any key to delete scenario... " -n1 -s
 echo ""
 
-disable_service "apikeys.googleapis.com"
 
 echo "================================================"
