@@ -30,8 +30,10 @@ SERVICEUSAGEAPIKEYSLIST="" #-9
 APIKEYCREATE="" #-b
 APIKEYLIST="" #-c
 IAMSETIAMPOLICY="" #-d
+DEPLOYMENTMANAGERUPDATE="" #-e
+CLOUDBUILDCREATE="" #-f
 
-while getopts "h?n123456789abcd" opt; do
+while getopts "h?n123456789abcdef" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
@@ -48,6 +50,8 @@ while getopts "h?n123456789abcd" opt; do
     b)  APIKEYCREATE="1";;
     c)  APIKEYLIST="1";;
     d)  IAMSETIAMPOLICY="1";;
+    e)  DEPLOYMENTMANAGERUPDATE="1";;
+    f)  CLOUDBUILDCREATE="1";;
     esac
 done
 
@@ -121,15 +125,23 @@ if [ "$IAMSETIAMPOLICY" ]; then
     bash ./tests/d-iam.serviceAccounts.setIamPolicy.sh
 fi
 
+if [ "$DEPLOYMENTMANAGERUPDATE" ]; then
+    bash ./tests/e-deploymentmanager.deployments.update.sh
+fi
+
+if [ "$CLOUDBUILDCREATE" ]; then
+    bash ./tests/f-cloudbuild.builds.create.sh
+fi
+
 # CLEAN ENVIRONMENT
 
 delete_role
-#for role in $(gcloud projects get-iam-policy "$PROJECT_ID" | grep -A2 securitytest | grep "role:" | cut -d ":" -f 2 | cut -d " " -f 2 | cut -d "/" -f 4); do
-#    delete_role $role
-#done
+for role in $(gcloud projects get-iam-policy "$PROJECT_ID" | grep -A2 securitytest | grep "role:" | cut -d ":" -f 2 | cut -d " " -f 2 | cut -d "/" -f 4); do
+    delete_role $role
+done
 
 if [ "$RM_SA" ]; then
-    #delete_sa
-    #delete_sa $ATTACK_SA
+    delete_sa
+    delete_sa $ATTACK_SA
     echo "finish"
 fi

@@ -64,7 +64,7 @@ rm /tmp/gcp_privesc1.yaml /tmp/gcp_privesc2.yaml
 
 modify_role "deploymentmanager.deployments.delete"
 
-echo "y" | gcloud --impersonate-service-account="${SERVICE_ACCOUNT_ID}@${PROJECT_ID}.iam.gserviceaccount.com" deployment-manager deployments delete test-vm-deployment
+echo "y" | gcloud deployment-manager deployments delete test-vm-deployment
 
 disable_service "deploymentmanager.googleapis.com"
 
