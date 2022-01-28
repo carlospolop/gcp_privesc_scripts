@@ -11,7 +11,17 @@ HELP="Use:
     -5 for iam.serviceAccounts.implicitDelegation abuse
     -6 for iam.serviceAccounts.signBlob abuse
     -7 for iam.serviceAccounts.signJwt abuse
+    -9 for serviceusage.apiKeys.create abuse
+    -a for serviceusage.apiKeys.list abuse
+    -b for apikeys.keys.create abuse
+    -c for apikeys.keys.getKeyString abuse
+    -d for iam.serviceAccounts.setIamPolicy abuse
+    -e for deploymentmanager.deployments.update abuse
+    -f for cloudbuild.builds.create abuse
+    -g for iam.serviceAccountKeys.update abuse
 "
+
+
 source lib/lib.sh
 
 RM_SA="1"
