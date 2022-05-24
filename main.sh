@@ -19,6 +19,8 @@ HELP="Use:
     -e for deploymentmanager.deployments.update abuse
     -f for cloudbuild.builds.create abuse
     -g for iam.serviceAccountKeys.update abuse
+    -i for composer.environments.create	 abuse
+    -i for container.clusters.create	 abuse
 "
 
 
@@ -43,8 +45,13 @@ IAMSETIAMPOLICY="" #-d
 DEPLOYMENTMANAGERUPDATE="" #-e
 CLOUDBUILDCREATE="" #-f
 SERVICEACCOUNTSKEYSUPDATE="" #-g
+COMPOSERCREATE="" #-i
+CLUSTERCREATE="" #-j
+SETCOMMONINSTANCEMETADATA="" #-k
+INSTANCESETSERVICEACCOUNT="" #-l
+STORAGE="" #-m
 
-while getopts "h?n123456789abcdefg" opt; do
+while getopts "h?n123456789abcdefgijklm" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
@@ -64,6 +71,11 @@ while getopts "h?n123456789abcdefg" opt; do
     e)  DEPLOYMENTMANAGERUPDATE="1";;
     f)  CLOUDBUILDCREATE="1";;
     g)  SERVICEACCOUNTSKEYSUPDATE="1";;
+    i)  COMPOSERCREATE="1";;
+    j)  CLUSTERCREATE="1";;
+    k)  SETCOMMONINSTANCEMETADATA="1";;
+    l)  INSTANCESETSERVICEACCOUNT="1";;
+    m)  STORAGE="1";;
     esac
 done
 
@@ -149,6 +161,26 @@ if [ "$SERVICEACCOUNTSKEYSUPDATE" ]; then
     bash ./tests/g-iam.serviceAccountKeys.update.sh
 fi
 
+if [ "$COMPOSERCREATE" ]; then
+    bash ./tests/i-composer.environmets.create.sh
+fi
+
+if [ "$CLUSTERCREATE" ]; then
+    bash ./tests/j-container.clusters.create.sh
+fi
+
+if [ "$SETCOMMONINSTANCEMETADATA" ]; then
+    bash ./tests/k-compute.projects.setCommonInstanceMetadata.sh
+fi
+
+if [ "$INSTANCESETSERVICEACCOUNT" ]; then
+    bash ./tests/l-compute.instances.setServiceAccount.sh
+fi
+
+if [ "$STORAGE" ]; then
+    bash ./tests/m-storage.sh
+fi
+
 # CLEAN ENVIRONMENT
 
 delete_role
@@ -156,8 +188,8 @@ delete_role
 #    delete_role $role
 #done
 
-if [ "$RM_SA" ]; then
+#if [ "$RM_SA" ]; then
     #delete_sa
     #delete_sa $ATTACK_SA
-    echo "finish"
-fi
+    #echo "finish"
+#fi
