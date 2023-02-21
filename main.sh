@@ -19,8 +19,10 @@ HELP="Use:
     -e for deploymentmanager.deployments.update abuse
     -f for cloudbuild.builds.create abuse
     -g for iam.serviceAccountKeys.update abuse
-    -i for composer.environments.create	 abuse
-    -i for container.clusters.create	 abuse
+    -i for composer.environments.create abuse
+    -j for container.clusters.create abuse
+    -k for compute.projects.setCommonInstanceMetadata abuse
+    -l for compute.instances.setServiceAccount,compute.instances.get abuse
 "
 
 
@@ -49,7 +51,7 @@ COMPOSERCREATE="" #-i
 CLUSTERCREATE="" #-j
 SETCOMMONINSTANCEMETADATA="" #-k
 INSTANCESETSERVICEACCOUNT="" #-l
-STORAGE="" #-m
+RUNJOBSCREATE="" #-m
 
 while getopts "h?n123456789abcdefgijklm" opt; do
   case "$opt" in
@@ -75,7 +77,7 @@ while getopts "h?n123456789abcdefgijklm" opt; do
     j)  CLUSTERCREATE="1";;
     k)  SETCOMMONINSTANCEMETADATA="1";;
     l)  INSTANCESETSERVICEACCOUNT="1";;
-    m)  STORAGE="1";;
+    m)  RUNJOBSCREATE="1";;
     esac
 done
 
@@ -179,6 +181,10 @@ fi
 
 if [ "$STORAGE" ]; then
     bash ./tests/m-storage.sh
+fi
+
+if [ "$RUNJOBSCREATE" ]; then
+    bash ./tests/m-run.jobs.create.sh
 fi
 
 # CLEAN ENVIRONMENT
