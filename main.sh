@@ -52,8 +52,9 @@ CLUSTERCREATE="" #-j
 SETCOMMONINSTANCEMETADATA="" #-k
 INSTANCESETSERVICEACCOUNT="" #-l
 RUNJOBSCREATE="" #-m
+RUNSERVICESCREATE="" #-o
 
-while getopts "h?n123456789abcdefgijklm" opt; do
+while getopts "h?n123456789abcdefgijklmo" opt; do
   case "$opt" in
     h|\?) printf "%s\n\n" "$HELP"; exit 0;;
     n)  RM_SA="";;
@@ -78,6 +79,7 @@ while getopts "h?n123456789abcdefgijklm" opt; do
     k)  SETCOMMONINSTANCEMETADATA="1";;
     l)  INSTANCESETSERVICEACCOUNT="1";;
     m)  RUNJOBSCREATE="1";;
+    o)  RUNSERVICESCREATE="1";;
     esac
 done
 
@@ -179,13 +181,14 @@ if [ "$INSTANCESETSERVICEACCOUNT" ]; then
     bash ./tests/l-compute.instances.setServiceAccount.sh
 fi
 
-if [ "$STORAGE" ]; then
-    bash ./tests/m-storage.sh
-fi
-
 if [ "$RUNJOBSCREATE" ]; then
     bash ./tests/m-run.jobs.create.sh
 fi
+
+if [ "$RUNSERVICESCREATE" ]; then
+    bash ./tests/n-run.services.create.sh
+fi
+
 
 # CLEAN ENVIRONMENT
 
