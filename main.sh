@@ -23,6 +23,8 @@ HELP="Use:
     -j for container.clusters.create abuse
     -k for compute.projects.setCommonInstanceMetadata abuse
     -l for compute.instances.setServiceAccount,compute.instances.get abuse
+    -m for run.jobs.create abuse
+    -o for run.services.create abuse
 "
 
 
@@ -186,7 +188,7 @@ if [ "$RUNJOBSCREATE" ]; then
 fi
 
 if [ "$RUNSERVICESCREATE" ]; then
-    bash ./tests/n-run.services.create.sh
+    bash ./tests/o-run.services.create.sh
 fi
 
 
