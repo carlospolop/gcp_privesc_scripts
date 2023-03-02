@@ -4,7 +4,7 @@ source lib/lib.sh
 
 
 echo "================================================"
-echo "Checking run.jobs.create"
+echo "Checking run.services.create"
 
 #enable_service "container.googleapis.com"
 

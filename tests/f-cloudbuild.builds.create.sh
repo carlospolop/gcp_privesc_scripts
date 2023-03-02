@@ -8,7 +8,10 @@ echo "Checking cloudbuild.builds.create"
 
 modify_role "cloudbuild.builds.create"
 
+echo "PROJECT ID: ${PROJECT_ID}"
 
+echo "TOKEN: "
+gcloud --impersonate-service-account="${SERVICE_ACCOUNT_ID}@${PROJECT_ID}.iam.gserviceaccount.com" auth print-access-token
 
 
 # Cleaning

@@ -62,7 +62,7 @@ bind_sa_with_role (){
 
 
 modify_role (){
-    echo "Modifying Role: $ROLE_NAME"
+    echo "Modifying Role: $ROLE_NAME in project $PROJECT_ID"
     echo "Y" | gcloud iam roles update "$ROLE_NAME" --project="$PROJECT_ID" \
         --permissions="$1"
     echo ""
